@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Configuration;
+using System.IO;
 using System.Reflection;
 using System.Security.Claims;
 using System.Web.Http;
@@ -25,7 +26,7 @@ namespace WebHost
         public Startup()
         {
             Log.Logger = new LoggerConfiguration()
-                //.WriteTo.LiterateConsole()
+                .WriteTo.ApplicationInsightsEvents(ConfigurationManager.AppSettings["ApplicationInsights_InstrumentationKey"])
                 .Enrich.FromLogContext()
                 .MinimumLevel.Information()
                 .CreateLogger();
