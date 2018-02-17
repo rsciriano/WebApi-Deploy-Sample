@@ -8,7 +8,7 @@ namespace Aplication.Queries.Infrastructure
     {
         public IDbConnection CreateConnection()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["cinematic"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             return new SqlConnection(connectionString);
         }
     }

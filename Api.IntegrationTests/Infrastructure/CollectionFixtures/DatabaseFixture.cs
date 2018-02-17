@@ -46,7 +46,7 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 
         public void Dispose()
         {
-            Database.Delete("cinematic");
+            Database.Delete("DefaultConnection");
 
             Server.Dispose();
         }

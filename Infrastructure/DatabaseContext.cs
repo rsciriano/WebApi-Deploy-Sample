@@ -11,7 +11,7 @@ namespace Infrastructure
     public class DatabaseContext : DbContext, IUnitOfWork
     {
         public DatabaseContext()
-            : base("Cinematic")
+            : base("DefaultConnection")
         {
         }
 
