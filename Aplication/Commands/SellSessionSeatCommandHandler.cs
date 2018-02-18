@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Aggregates.Sessions;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace Aplication.Commands
 {
-    public class SellSessionSeatCommandHandler : IAsyncRequestHandler<SellSessionSeatCommand, SellSessionSeatResponse>
+    public class SellSessionSeatCommandHandler : IRequestHandler<SellSessionSeatCommand, SellSessionSeatResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISessionRepository _sessionRepository;
@@ -20,7 +21,7 @@ namespace Aplication.Commands
             _sessionRepository = sessionRepository;
         }
 
-        public async Task<SellSessionSeatResponse> Handle(SellSessionSeatCommand message)
+        public async Task<SellSessionSeatResponse> Handle(SellSessionSeatCommand message, CancellationToken cancellationToken)
         {
             var session = await _sessionRepository.GetSessionById(message.CinemaId, message.SessionId);
 

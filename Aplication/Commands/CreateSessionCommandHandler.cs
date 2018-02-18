@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Aplication.Queries.ViewModels;
 using Domain;
@@ -10,7 +11,7 @@ using MediatR;
 
 namespace Aplication.Commands
 {
-    public class CreateSessionCommandHandler : IAsyncRequestHandler<CreateSessionCommand, CreateSessionResponse>
+    public class CreateSessionCommandHandler : IRequestHandler<CreateSessionCommand, CreateSessionResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICinemaRepository _cinemaRepository;
@@ -29,7 +30,7 @@ namespace Aplication.Commands
             _sessionRepository = sessionRepository;
         }
 
-        public async Task<CreateSessionResponse> Handle(CreateSessionCommand message)
+        public async Task<CreateSessionResponse> Handle(CreateSessionCommand message, CancellationToken cancellationToken)
         {
             var cinema = await _cinemaRepository.GetCinemaById(message.CinemaId);
 

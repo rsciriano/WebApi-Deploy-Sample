@@ -4,10 +4,11 @@ using Aplication.Queries.Infrastructure;
 using Aplication.Queries.ViewModels;
 using MediatR;
 using Dapper;
+using System.Threading;
 
 namespace Aplication.Queries
 {
-    public class GetScheduleQueryHandler : IAsyncRequestHandler<GetScheduleQuery, QueryResponse<ScheduleViewModel[]>>
+    public class GetScheduleQueryHandler : IRequestHandler<GetScheduleQuery, QueryResponse<ScheduleViewModel[]>>
     {
         private readonly IConnectionProvider _connectionProvider;
 
@@ -16,7 +17,7 @@ namespace Aplication.Queries
             _connectionProvider = connectionProvider;
         }
 
-        public async Task<QueryResponse<ScheduleViewModel[]>> Handle(GetScheduleQuery message)
+        public async Task<QueryResponse<ScheduleViewModel[]>> Handle(GetScheduleQuery message, CancellationToken cancellationToken)
         {
             using (var conn = _connectionProvider.CreateConnection())
             {

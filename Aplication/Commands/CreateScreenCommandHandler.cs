@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Aplication.Queries.ViewModels;
 using Domain;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace Aplication.Commands
 {
-    public class CreateScreenCommandHandler : IAsyncRequestHandler<CreateScreenCommand, CreateScreenResponse>
+    public class CreateScreenCommandHandler : IRequestHandler<CreateScreenCommand, CreateScreenResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICinemaRepository _cinemaRepository;
@@ -18,7 +19,7 @@ namespace Aplication.Commands
             _cinemaRepository = cinemaRepository;
         }
 
-        public async Task<CreateScreenResponse> Handle(CreateScreenCommand message)
+        public async Task<CreateScreenResponse> Handle(CreateScreenCommand message, CancellationToken cancellationToken)
         {
             var cinema = await _cinemaRepository.GetCinemaById(message.CinemaId);
 

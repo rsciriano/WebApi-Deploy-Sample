@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -17,6 +18,7 @@ namespace Aplication.Pipeline
 
         public async Task<TResponse> Handle(
             TRequest request,
+            CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext(request);

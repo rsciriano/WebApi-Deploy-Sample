@@ -8,6 +8,9 @@
 *.sln.docstates
 *.user.config
 
+# Vagrant data folder
+.vagrant
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

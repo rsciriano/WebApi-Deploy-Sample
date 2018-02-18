@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Serilog;
@@ -10,6 +11,7 @@ namespace Aplication.Pipeline
     {
         public async Task<TResponse> Handle(
             TRequest request,
+            CancellationToken cancellationToken, 
             RequestHandlerDelegate<TResponse> next)
         {
             var clock = Stopwatch.StartNew();

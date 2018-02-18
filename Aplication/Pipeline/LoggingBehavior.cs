@@ -1,5 +1,6 @@
-﻿    using System;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Serilog;
 using Serilog.Context;
@@ -11,6 +12,7 @@ namespace Aplication.Pipeline
     {
         public async Task<TResponse> Handle(
             TRequest request,
+            CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
             using (LogContext.PushProperty("MediatRRequestType", typeof(TRequest).FullName))

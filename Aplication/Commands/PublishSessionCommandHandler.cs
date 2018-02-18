@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Aggregates.Sessions;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Aplication.Commands
 {
-    public class PublishSessionCommandHandler : IAsyncRequestHandler<PublishSessionCommand>
+    public class PublishSessionCommandHandler : IRequestHandler<PublishSessionCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISessionRepository _sessionRepository;
@@ -19,7 +20,7 @@ namespace Aplication.Commands
             _sessionRepository = sessionRepository;
         }
 
-        public async Task Handle(PublishSessionCommand message)
+        public async Task Handle(PublishSessionCommand message, CancellationToken cancellationToken)
         {
             var session = await _sessionRepository.GetSessionById(message.CinemaId, message.SessionId);
 

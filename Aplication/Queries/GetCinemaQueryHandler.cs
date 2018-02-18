@@ -3,10 +3,11 @@ using Aplication.Queries.Infrastructure;
 using Aplication.Queries.ViewModels;
 using MediatR;
 using Dapper;
+using System.Threading;
 
 namespace Aplication.Queries
 {
-    public class GetCinemaQueryHandler : IAsyncRequestHandler<GetCinemaQuery, QueryResponse<CinemaViewModel>>
+    public class GetCinemaQueryHandler : IRequestHandler<GetCinemaQuery, QueryResponse<CinemaViewModel>>
     {
         private readonly IConnectionProvider _connectionProvider;
 
@@ -15,7 +16,7 @@ namespace Aplication.Queries
             _connectionProvider = connectionProvider;
         }
 
-        public async Task<QueryResponse<CinemaViewModel>> Handle(GetCinemaQuery message)
+        public async Task<QueryResponse<CinemaViewModel>> Handle(GetCinemaQuery message, CancellationToken cancellationToken)
         {
             using (var conn = _connectionProvider.CreateConnection())
             {
