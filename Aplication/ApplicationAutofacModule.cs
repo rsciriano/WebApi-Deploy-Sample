@@ -7,13 +7,14 @@ namespace Aplication
     {
         protected override void Load(ContainerBuilder builder)
         {
+            //TODO: Corredir error de MediatR behaviors en Mono
             // Manualy register behaviors
-            builder.RegisterGeneric(typeof(TimingBehavior<,>))
+            /*builder.RegisterGeneric(typeof(TimingBehavior<,>))
                 .AsImplementedInterfaces();
             builder.RegisterGeneric(typeof(LoggingBehavior<,>))
                 .AsImplementedInterfaces();
             builder.RegisterGeneric(typeof(ValidationBehavior<,>))
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces();*/
 
             // Scan assembly for other registrations
             var assembly = GetType().Assembly;

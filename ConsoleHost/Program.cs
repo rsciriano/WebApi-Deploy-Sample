@@ -9,7 +9,7 @@ namespace ConsoleHost
         static void Main(string[] args)
         {
             // Specify the URI to use for the local host:
-            string baseUri = "http://localhost:49018/";
+            string baseUri = "http://*:8081/";           
 
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.LiterateConsole()
