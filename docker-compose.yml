@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  web:
+    image: "dnz-webapi:${BUILD_BUILDNUMBER}"
+    build: "${DOCKER_IMAGE_SOURCE}"
