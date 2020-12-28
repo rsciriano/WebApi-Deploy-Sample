@@ -9,27 +9,27 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.1" />
-    <PackageReference Include="Autofac.Owin" Version="4.1.0" />
-    <PackageReference Include="Autofac.WebApi2" Version="4.1.0" />
-    <PackageReference Include="Autofac.WebApi2.Owin" Version="4.0.0" />
-    <PackageReference Include="EntityFramework" Version="6.1.3" />
-    <PackageReference Include="FluentValidation" Version="7.1.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Owin" Version="5.2.3" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.3" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Owin.Diagnostics" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Owin.Host.HttpListener" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Owin.Hosting" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Owin.Security.Authorization" Version="1.1.0.1" />
-    <PackageReference Include="Microsoft.Owin.Security.Authorization.WebApi" Version="1.1.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Serilog" Version="2.5.0" />
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.0" />
-    <PackageReference Include="Serilog.Sinks.Literate" Version="3.0.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Autofac" />
+    <PackageReference Include="Autofac.Owin" />
+    <PackageReference Include="Autofac.WebApi2" />
+    <PackageReference Include="Autofac.WebApi2.Owin" />
+    <PackageReference Include="EntityFramework"  />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Owin" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" />
+    <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.Owin.Diagnostics" />
+    <PackageReference Include="Microsoft.Owin.Host.HttpListener" />
+    <PackageReference Include="Microsoft.Owin.Hosting" />
+    <PackageReference Include="Microsoft.Owin.Security.Authorization" />
+    <PackageReference Include="Microsoft.Owin.Security.Authorization.WebApi" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.ColoredConsole" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.Literate" />
+    <PackageReference Include="System.ComponentModel.Annotations" />
+    <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
 </Project>
