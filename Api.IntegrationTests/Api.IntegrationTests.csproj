@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>exe</OutputType>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net5</TargetFramework>
@@ -39,6 +39,7 @@
     <PackageReference Include="Microsoft.Owin.Testing" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Refit" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Data.DataSetExtensions" />
     <PackageReference Include="xunit" />
@@ -49,4 +50,9 @@
     <PackageReference Include="xunit.extensibility.execution" />
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
+
+<Target Name="CopyFilerForTests" AfterTargets="AfterBuild">
+  <Copy SourceFiles="app.config" DestinationFiles="$(OutDir)\testhost.dll.config" />
+</Target>
+
 </Project>
