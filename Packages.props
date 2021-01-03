@@ -16,6 +16,7 @@
     <PackageReference Update="Microsoft.AspNet.WebApi.OwinSelfHost" Version="[5.2.3]" />
     <PackageReference Update="Microsoft.AspNet.WebApi.Versioning" Version="[2.1.0]" />
     <PackageReference Update="Microsoft.CSharp" Version="[4.7.0]" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="[16.8.3]" />
     <PackageReference Update="Microsoft.Owin.Diagnostics" Version="[3.1.0]" />
     <PackageReference Update="Microsoft.Owin.Host.HttpListener" Version="[3.1.0]" />
     <PackageReference Update="Microsoft.Owin.Hosting" Version="[3.1.0]" />

@@ -3,7 +3,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
@@ -31,6 +31,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Owin" />
     <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Owin.Hosting" />
     <PackageReference Include="Microsoft.Owin.Security" />
     <PackageReference Include="Microsoft.Owin.Security.Authorization" />
