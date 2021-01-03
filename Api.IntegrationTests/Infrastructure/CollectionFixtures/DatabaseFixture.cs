@@ -11,6 +11,13 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
     {
         public DatabaseFixture()
         {
+            //System.Diagnostics.Debugger.Launch();
+           
+            System.Data.Entity.DbConfiguration.Loaded += (_, a) => {
+                a.AddDefaultResolver(new TestDbDependencyResolver());
+            };
+            
+
             Database.SetInitializer(new DropCreateDatabaseAlways());
 
             using (var context = new DatabaseContext())
