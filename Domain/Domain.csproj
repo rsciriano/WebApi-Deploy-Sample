@@ -3,11 +3,12 @@
     <TargetFramework>net452</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Aggregates\Tickets\" />
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="IsExternalInit">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="System.Data.DataSetExtensions" />

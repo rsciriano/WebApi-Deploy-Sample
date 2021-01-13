@@ -3,7 +3,7 @@
   <Class Name="Domain.Aggregates.Sessions.Session">
     <Position X="0.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAICAAAAACAAAAAABgAAAAAAAAAABAAAAACAIhAAAAA=</HashCode>
+      <HashCode>AAICAAAAACAAAAAABkAEAAAAAAAABEAAAACAIhAAAAA=</HashCode>
       <FileName>Aggregates\Sessions\Session.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -13,23 +13,20 @@
   <Class Name="Domain.Aggregates.Sessions.SessionSeat">
     <Position X="3.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAQACQAAAQBAIAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAQAAAQACQAAAQBAIAAIAABAAAAAAAAAAAAA=</HashCode>
       <FileName>Aggregates\Sessions\SessionSeat.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Ticket" />
       <Property Name="Session" />
+      <Property Name="Ticket" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Domain.Aggregates.Sessions.Ticket">
-    <Position X="7" Y="0.5" Width="2.25" />
+  <Class Name="Domain.Aggregates.Tickets.Ticket">
+    <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAEAAAAAAAAIAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>Aggregates\Sessions\Ticket.cs</FileName>
+      <HashCode>AAACAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Aggregates\Tickets\Ticket.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="SessionSeat" />
-    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Commands;
+using Aplication.Queries;
 using MediatR;
 
 namespace Api.Controllers.Ticketing
@@ -41,7 +43,34 @@ namespace Api.Controllers.Ticketing
             return Ok(response);
         }
 
+
+        [HttpGet]
+        [Route("{ticketId:guid}")]
+        public async Task<IHttpActionResult> SellSessionSeat(
+            int cinemaId,
+            Guid ticketId)
+        {
+            //TODO: Restrict response depend on user's permissions
+
+            var response = await _mediator.Send(new GetTicketQuery
+            {
+                CinemaId = cinemaId,
+                TicketId = ticketId
+            });
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // Undo sell ticket for session
         // Available seats per session
+
+
     }
 }

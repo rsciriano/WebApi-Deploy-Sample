@@ -40,6 +40,7 @@
     <PackageReference Include="Refit" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Data.DataSetExtensions" />
+    <PackageReference Include="System.ValueTuple" />    
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.abstractions" />
     <PackageReference Include="xunit.assert" />

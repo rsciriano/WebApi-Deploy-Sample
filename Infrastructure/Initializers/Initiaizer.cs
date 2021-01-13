@@ -29,6 +29,10 @@ namespace Infrastructure.Initializers
             {
                 var sesion1 = Session.Create(screen1, conAir, new DateTime(2017, 3, 5, 18, 0, 0));
                 sesion1.Publish();
+
+                // Generate one ticket for testing
+                sesion1.Seats.First().Sell(5.5m);
+
                 var sesion2 = Session.Create(screen2, batman, new DateTime(2017, 3, 5, 19, 45, 0));
                 var sesion3 = Session.Create(screen3, pulpFiction, new DateTime(2017, 3, 5, 22, 0, 0));
 

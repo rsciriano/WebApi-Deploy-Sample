@@ -3,6 +3,7 @@
     <TargetFramework>net452</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Migrations\201710182000518_Initial.Designer.cs">
@@ -11,11 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Migrations\201710182000518_Initial.resx">
-      <DependentUpon>201710182000518_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" />

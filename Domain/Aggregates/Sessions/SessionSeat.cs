@@ -1,5 +1,6 @@
 ﻿using System;
 using Domain.Aggregates.Cinemas;
+using Domain.Aggregates.Tickets;
 
 namespace Domain.Aggregates.Sessions
 {
@@ -41,9 +42,11 @@ namespace Domain.Aggregates.Sessions
 
         public decimal? Price { get; private set; }
 
-        public Guid? Ticket { get; private set; }
+        public Guid? TicketId { get; set; }
 
-        public bool Sold => Ticket.HasValue;
+        public Ticket Ticket { get; private set; }
+
+        public bool Sold => TicketId.HasValue;
 
         public Guid Sell(decimal price)
         {
@@ -53,9 +56,18 @@ namespace Domain.Aggregates.Sessions
             }
 
             Price = price;
-            Ticket = Guid.NewGuid();
 
-            return Ticket.Value;
+            var ticketId = Guid.NewGuid();
+            Ticket = new Ticket
+            {
+                Id = ticketId,
+                Price = price,
+                SessionSeat = this
+            };
+
+            TicketId = ticketId;
+
+            return ticketId;
         }
     }
 }

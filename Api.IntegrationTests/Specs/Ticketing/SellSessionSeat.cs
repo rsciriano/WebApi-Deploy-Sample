@@ -29,7 +29,9 @@ namespace Api.IntegrationTests.Specs.Ticketing
         [Fact]
         public async Task SellSessionSeat_For_Published_Session_And_Not_Sold_Seat_Should_Return_TicketId()
         {
-            var endpoint = $"api/v1/cinemas/{_cinemaId}/ticketing/sessions/{_publishedSessionId}/seat/1/1";
+            var (seatRow, seatNumber) = _fixture.SeedData.Sessions.First().Seats.Where(s => !s.Sold).Select(s => (s.SeatRow, s.SeatNumber)).First();
+
+            var endpoint = $"api/v1/cinemas/{_cinemaId}/ticketing/sessions/{_publishedSessionId}/seat/{seatRow}/{seatNumber}";
             var response = await _fixture.Server.CreateRequest(endpoint)
                 .WithIdentity(Identities.User)
                 .PostAsync();

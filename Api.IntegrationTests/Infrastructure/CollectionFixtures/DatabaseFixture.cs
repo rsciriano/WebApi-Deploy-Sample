@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using Infrastructure;
 using Infrastructure.Initializers;
+using Infrastructure.Migrations;
 using Microsoft.Owin.Testing;
 
 namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
@@ -10,7 +12,7 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
     public class DatabaseFixture : IDisposable
     {
         public DatabaseFixture()
-        {
+        {         
             Database.SetInitializer(new DropCreateDatabaseAlways());
 
             using (var context = new DatabaseContext())
@@ -26,6 +28,7 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 
                 var sessions = context.Sessions
                     .AsNoTracking()
+                    .Include(s => s.Seats.Select(se => se.Ticket))
                     .ToArray();
 
                 SeedData = new SeedData

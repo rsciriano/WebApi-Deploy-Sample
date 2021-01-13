@@ -4,6 +4,7 @@ using Domain;
 using Domain.Aggregates.Cinemas;
 using Domain.Aggregates.Films;
 using Domain.Aggregates.Sessions;
+using Domain.Aggregates.Tickets;
 using Infrastructure.Configuration;
 
 namespace Infrastructure
@@ -21,6 +22,8 @@ namespace Infrastructure
 
         public DbSet<Session> Sessions { get; set; }
 
+        public DbSet<Ticket> Tickets { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CinemaEntityConfiguration());
@@ -29,6 +32,7 @@ namespace Infrastructure
             modelBuilder.Configurations.Add(new FilmEntityConfiguration());
             modelBuilder.Configurations.Add(new SessionEntityConfiguration());
             modelBuilder.Configurations.Add(new SessionSeatEntityConfiguration());
+            modelBuilder.Configurations.Add(new TicketEntityConfiguration());
         }
 
         async Task IUnitOfWork.CommitAsync()
