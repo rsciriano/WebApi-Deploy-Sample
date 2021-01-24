@@ -1,22 +1,25 @@
-using System.Data.Entity.ModelConfiguration;
 using Domain.Aggregates.Cinemas;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration
 {
-    internal class ScreenEntityConfiguration : EntityTypeConfiguration<Screen>
+    internal class ScreenEntityConfiguration : IEntityTypeConfiguration<Screen>
     {
-        public ScreenEntityConfiguration()
+        public void Configure(EntityTypeBuilder<Screen> builder)
         {
-            ToTable("Screens", "cine");
+            builder.ToTable("Screens", "cine");
 
-            HasKey(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            Property(x => x.Name)
+            builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
 
-            HasMany(x => x.Seats)
-                .WithRequired(s => s.Screen);
+            builder.HasMany(x => x.Seats)
+                .WithOne(s => s.Screen)
+                .IsRequired();
         }
+
     }
 }

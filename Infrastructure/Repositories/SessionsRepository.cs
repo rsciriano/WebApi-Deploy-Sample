@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Domain.Aggregates.Sessions;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Infrastructure.Repositories
@@ -19,7 +19,8 @@ namespace Infrastructure.Repositories
             return _context.Sessions
                 .Include(s => s.Screen)
                 .Include(s => s.Film)
-                .Include(s => s.Seats.Select(x => x.Seat))
+                .Include(s => s.Seats)
+                    .ThenInclude(x => x.Seat)
                 .SingleOrDefaultAsync(s => s.Id == sessionId && s.Screen.CinemaId == cinemaId);
         }
 

@@ -1,18 +1,21 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using Domain.Aggregates.Sessions;
+﻿using Domain.Aggregates.Sessions;
 using Domain.Aggregates.Tickets;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration
 {
-    internal class TicketEntityConfiguration : EntityTypeConfiguration<Ticket>
+    internal class TicketEntityConfiguration : IEntityTypeConfiguration<Ticket>
     {
-        public TicketEntityConfiguration()
+        public void Configure(EntityTypeBuilder<Ticket> builder)
         {
-            ToTable("Tickets", "ticket");
+            builder.ToTable("Tickets", "ticket");
 
-            HasKey(x => new { x.Id });
+            builder.HasKey(x => new { x.Id });
 
-            this.HasRequired(x => x.SessionSeat).WithOptional(x => x.Ticket);
+            builder.HasOne(x => x.SessionSeat)
+                .WithOne(x => x.Ticket)
+                .IsRequired(false);
         }
     }
 }

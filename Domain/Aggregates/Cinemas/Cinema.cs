@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Aggregates.Films;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Aggregates.Cinemas
@@ -16,6 +17,7 @@ namespace Domain.Aggregates.Cinemas
 
             Name = name;
             Screens = new List<Screen>();
+            Films = new List<FilmCinema>();
         }
 
         public int Id { get; private set; }
@@ -23,6 +25,9 @@ namespace Domain.Aggregates.Cinemas
         public string Name { get; private set; }
 
         public ICollection<Screen> Screens { get; private set; }
+
+        public ICollection<FilmCinema> Films { get; private set; }
+
 
         public Screen CreateScreen(string name, int rows, int seatsPerRow)
         {

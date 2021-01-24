@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System.Linq;
 using Infrastructure;
-using Infrastructure.Initializers;
-using Infrastructure.Migrations;
 using Microsoft.Owin.Testing;
+using Infrastructure.Initializers;
 
 namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 {
@@ -13,13 +12,21 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
     {
         public DatabaseFixture()
         {         
-            Database.SetInitializer(new DropCreateDatabaseAlways());
+            //Database.SetInitializer(new DropCreateDatabaseAlways());
+            
 
             using (var context = new DatabaseContext())
             {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Initiaizer.Seed(context);
+                context.SaveChanges();
+
                 var firstCinema = context.Cinemas
                     .AsNoTracking()
-                    .Include(c => c.Screens.Select(s => s.Seats))
+                    .Include(c => c.Screens)
+                        .ThenInclude(s => s.Seats)
                     .First();
 
                 var films = context.Films
@@ -28,7 +35,8 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 
                 var sessions = context.Sessions
                     .AsNoTracking()
-                    .Include(s => s.Seats.Select(se => se.Ticket))
+                    .Include(s => s.Seats)
+                        .ThenInclude(se => se.Ticket)
                     .ToArray();
 
                 SeedData = new SeedData
@@ -49,7 +57,11 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 
         public void Dispose()
         {
-            Database.Delete("cinematic");
+            //Database.Delete("cinematic");
+            using (var context = new DatabaseContext())
+            {
+                //context.Database.EnsureDeleted();
+            }
 
             Server.Dispose();
         }

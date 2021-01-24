@@ -1,28 +1,31 @@
-using System.Data.Entity.ModelConfiguration;
 using Domain.Aggregates.Sessions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration
 {
-    internal class SessionEntityConfiguration : EntityTypeConfiguration<Session>
+    internal class SessionEntityConfiguration : IEntityTypeConfiguration<Session>
     {
-        public SessionEntityConfiguration()
+        public void Configure(EntityTypeBuilder<Session> builder)
         {
-            ToTable("Sessions", "session");
+            builder.ToTable("Sessions", "session");
 
-            HasKey(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            Property(x => x.Start)
+            builder.Property(x => x.Start)
                 .IsRequired();
 
-            HasRequired(x => x.Screen)
-                .WithMany();
+            builder.HasOne(x => x.Screen)
+                .WithMany()
+                .IsRequired();
 
-            HasRequired(x => x.Film)
-                .WithMany();
+            builder.HasOne(x => x.Film)
+                .WithMany()
+                .IsRequired();
 
-            HasMany(x => x.Seats)
-                .WithRequired(x => x.Session)
-                .WillCascadeOnDelete(false);
+            builder.HasMany(x => x.Seats)
+                .WithOne(x => x.Session)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System.Linq;
 using Domain.Aggregates.Cinemas;
 using Domain.Aggregates.Films;
@@ -15,7 +15,8 @@ namespace Infrastructure.Initializers
             var batman = new Film("Batman", 95);
             var pulpFiction = new Film("Pulp fiction", 100);
 
-            context.Films.AddOrUpdate(c => c.Title, conAir, batman, pulpFiction);
+            //context.Films.AddOrUpdate(c => c.Title, conAir, batman, pulpFiction);
+            context.Films.AddRange(new[] { conAir, batman, pulpFiction });
 
             var cinema = new Cinema("Palafox");
             var screen1 = cinema.CreateScreen(name: "Aneto", rows: 5, seatsPerRow: 5);
@@ -23,7 +24,8 @@ namespace Infrastructure.Initializers
             var screen3 = cinema.CreateScreen(name: "Posets", rows: 7, seatsPerRow: 7);
             batman.Cinemas.Add(cinema);
 
-            context.Cinemas.AddOrUpdate(c => c.Name, cinema);
+            //context.Cinemas.AddOrUpdate(c => c.Name, cinema);
+            context.Cinemas.Add(cinema);
 
             if (context.Sessions.Any() == false)
             {

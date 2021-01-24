@@ -1,29 +1,32 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using Domain.Aggregates.Films;
+﻿using Domain.Aggregates.Films;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration
 {
-    internal class FilmEntityConfiguration : EntityTypeConfiguration<Film>
+    internal class FilmEntityConfiguration : IEntityTypeConfiguration<Film>
     {
-        public FilmEntityConfiguration()
+        public void Configure(EntityTypeBuilder<Film> builder)
         {
-            ToTable("Films", "cine");
+            builder.ToTable("Films", "cine");
 
-            HasKey(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            Property(x => x.Title)
+            builder.Property(x => x.Title)
                 .HasMaxLength(256)
                 .IsRequired();
 
-            Property(x => x.DurationInMinutes)
+            builder.Property(x => x.DurationInMinutes)
                 .IsRequired();
 
-            HasMany(x => x.Cinemas)
+            /*
+            builder.HasMany(x => x.Cinemas)
                 .WithMany()
                 .Map(config =>
                 {
                     config.ToTable("FilmCinemas", "cine");
                 });
+            */
         }
     }
 }

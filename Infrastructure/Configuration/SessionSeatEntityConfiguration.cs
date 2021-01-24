@@ -1,15 +1,16 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using Domain.Aggregates.Sessions;
+﻿using Domain.Aggregates.Sessions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration
 {
-    internal class SessionSeatEntityConfiguration : EntityTypeConfiguration<SessionSeat>
+    internal class SessionSeatEntityConfiguration : IEntityTypeConfiguration<SessionSeat>
     {
-        public SessionSeatEntityConfiguration()
+        public void Configure(EntityTypeBuilder<SessionSeat> builder)
         {
-            ToTable("SessionSeats", "session");
+            builder.ToTable("SessionSeats", "session");
 
-            HasKey(x => new { x.SessionId, x.SeatRow, x.SeatNumber });
+            builder.HasKey(x => new { x.SessionId, x.SeatRow, x.SeatNumber });
         }
     }
 }

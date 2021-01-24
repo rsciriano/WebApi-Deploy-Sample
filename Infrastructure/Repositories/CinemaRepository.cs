@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Domain.Aggregates.Cinemas;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Infrastructure.Repositories
@@ -17,7 +17,8 @@ namespace Infrastructure.Repositories
         public async Task<Cinema> GetCinemaById(int cinemaId)
         {
             return await _context.Cinemas
-                .Include(x => x.Screens.Select(s => s.Seats))
+                .Include(x => x.Screens)
+                    .ThenInclude(s => s.Seats)
                 .FirstOrDefaultAsync(x => x.Id == cinemaId);
         }
     }

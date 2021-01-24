@@ -19,7 +19,8 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Owin" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Versioning" />
     <PackageReference Include="Microsoft.CSharp" />
-    <PackageReference Include="Microsoft.Owin.Security.Authorization" />
+    <PackageReference Include="Microsoft.Owin" />    
+    <PackageReference Include="Microsoft.Owin.Security.Authorization" />    
     <PackageReference Include="Microsoft.Owin.Security.Authorization.WebApi" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Serilog" />
