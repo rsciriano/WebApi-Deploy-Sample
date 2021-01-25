@@ -2,7 +2,7 @@
   <ItemGroup>
     <PackageReference Update="Acheve.TestHost" Version="[3.0.0]" />
     <PackageReference Update="Autofac" Version="[6.1.0]" />
-    <PackageReference Update="Autofac.Extensions.DependencyInjection" Version="[7.1.0]" />    
+    <PackageReference Update="Autofac.Extensions.DependencyInjection" Version="[7.1.0]" />
     <PackageReference Update="Dapper" Version="[1.50.2]" />
     <PackageReference Update="Dapper.Contrib" Version="[1.50.0]" />
     <PackageReference Update="FluentAssertions" Version="[4.19.4]" />
@@ -10,6 +10,7 @@
     <PackageReference Update="MediatR" Version="[3.0.1]" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.JwtBearer" Version="[5.0.2]" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Versioning" Version="[4.2.0]" />
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="[4.2.0]" />
     <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="[5.0.2]" />
     <PackageReference Update="Microsoft.AspNet.WebApi.Client" Version="[5.2.3]" />
     <PackageReference Update="Microsoft.AspNet.WebApi.Owin" Version="[5.2.3]" />
@@ -32,6 +33,7 @@
     <PackageReference Update="Serilog.Sinks.ColoredConsole" Version="[3.0.1]" />
     <PackageReference Update="Serilog.Sinks.Console" Version="[3.1.0]" />
     <PackageReference Update="Serilog.Sinks.Literate" Version="[3.0.0]" />
+    <PackageReference Update="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Update="System.Configuration.ConfigurationManager" Version="[5.0.0]" />
     <PackageReference Update="System.ComponentModel.Annotations" Version="[5.0.0]" />
     <PackageReference Update="System.Data.DataSetExtensions" Version="[4.5.0]" />

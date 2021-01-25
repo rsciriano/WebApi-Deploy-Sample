@@ -10,9 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -35,11 +38,49 @@ namespace CoreHost
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                             .AddJwtBearer();
 
+            /*
+            services.AddMvc(c =>
+                c.Conventions.Add(new ApiExplorerGroupPerVersionConvention())
+            );
+            */
+
             services.AddControllers()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddApplicationPart(typeof(ApiAutofacModule).Assembly);
 
             services.AddApiVersioning();
+
+            services.AddVersionedApiExplorer(o =>
+            {
+                o.GroupNameFormat = "'v'VVV";
+                o.SubstituteApiVersionInUrl = true;
+            });
+            services.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.ReportApiVersions = true;
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiSample", Version = "v1" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "WebApiSample", Version = "v2" });
+                c.ResolveConflictingActions(resolver => resolver.First());
+
+                /*c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+
+                    var versions = methodInfo.DeclaringType
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    return versions.Any(v => $"v{v.ToString()}" == docName);
+                });*/
+            });
+
 
             ApiConfiguration.Configure(services);
         }
@@ -71,24 +112,33 @@ namespace CoreHost
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => 
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiSample v1.0");
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApiSample v2.0");
+                });
             }
 
             app.UseRouting();
 
             // ### Temporal authentication middleware
-            app.Use(async (context, next) =>
+            if (env.IsDevelopment())
             {
-                var identity = new ClaimsIdentity(new[]
+                app.Use(async (context, next) =>
                 {
-                    new Claim(ClaimTypes.Role, "Administrator"),
-                    new Claim(ClaimTypes.Role, "Vendor"),
-                    new Claim(ClaimTypes.Name, "Hugo"),
-                },
-                "Custom");
-                context.User = new ClaimsPrincipal(identity);
-                await next();
-            });
-            // ###
+                    var identity = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Role, "Administrator"),
+                        new Claim(ClaimTypes.Role, "Vendor"),
+                        new Claim(ClaimTypes.Name, "Hugo"),
+                    },
+                    "Custom");
+                    context.User = new ClaimsPrincipal(identity);
+                    await next();
+                });
+                // ###
+            }
 
             app.UseAuthorization();
 

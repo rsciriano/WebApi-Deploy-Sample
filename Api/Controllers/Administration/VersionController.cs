@@ -13,9 +13,11 @@ namespace Api.Controllers.Administration
     public class VersionController : Controller
     {
         [Route("")]
+        [HttpGet]
         public string Get() => "v1.0";
 
         [Route(""), MapToApiVersion("2.0")]
+        [HttpGet]
         public string GetV2() => "v2.0";
     }
 }

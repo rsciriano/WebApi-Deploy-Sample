@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
+    [ApiController]
     [Version1]
     [Route("api/v{version:apiVersion}/cinemas")]
     [AuthorizeAttribute(Policy = Policies.Administrator)]
