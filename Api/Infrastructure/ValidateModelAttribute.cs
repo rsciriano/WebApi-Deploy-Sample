@@ -1,19 +1,19 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 
 namespace Api.Infrastructure
 {
     public class ValidateModelAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (actionContext.ModelState.IsValid == false)
+            if (context.ModelState.IsValid == false)
             {
-                actionContext.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    actionContext.ModelState);
+                context.Result = new ObjectResult(context.ModelState)
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest
+                };
             }
         }
     }

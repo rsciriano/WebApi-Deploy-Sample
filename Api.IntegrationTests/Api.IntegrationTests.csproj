@@ -21,23 +21,16 @@
     <Folder Include="Apis\Ticketing\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Acheve.Owin.Testing.Security" />
+    <PackageReference Include="Acheve.TestHost" />
     <PackageReference Include="Autofac" />
-    <PackageReference Include="Autofac.Owin"  />
-    <PackageReference Include="Autofac.WebApi2"  />
-    <PackageReference Include="Autofac.WebApi2.Owin"  />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="Dapper"  />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Owin" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Microsoft.Owin.Hosting" />
-    <PackageReference Include="Microsoft.Owin.Security" />
-    <PackageReference Include="Microsoft.Owin.Security.Authorization" />
-    <PackageReference Include="Microsoft.Owin.Security.Authorization.WebApi" />
-    <PackageReference Include="Microsoft.Owin.Testing" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Refit" />
     <PackageReference Include="System.ComponentModel.Annotations" />

@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.Web.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+
 
 namespace Api.Infrastructure.Versioning
 {

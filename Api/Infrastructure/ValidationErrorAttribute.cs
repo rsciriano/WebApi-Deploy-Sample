@@ -1,17 +1,18 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http.Filters;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
 namespace Api.Infrastructure
 {
     public class ValidationErrorAttribute : ExceptionFilterAttribute
     {
-        public override void OnException(HttpActionExecutedContext actionExecutedContext)
+        public override void OnException(ExceptionContext context)
         {
-            var exception = actionExecutedContext.Exception as ValidationException;
+            var exception = context.Exception as ValidationException;
 
             if (exception == null)
             {
@@ -21,11 +22,12 @@ namespace Api.Infrastructure
             var errors = exception.Errors
                 .Select(x => new { x.PropertyName, x.ErrorMessage })
                 .ToArray();
-            var message = JsonConvert.SerializeObject(errors);
 
-            actionExecutedContext.Request.CreateErrorResponse(
-                HttpStatusCode.BadRequest,
-                message);
+            context.Result = new ObjectResult(errors)
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest
+            };
+
         }
     }
 }

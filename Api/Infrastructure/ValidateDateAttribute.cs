@@ -1,25 +1,30 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 
 namespace Api.Infrastructure
 {
     public class ValidateDateAttribute : ActionFilterAttribute
     {
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            var routeData = actionContext.RequestContext.RouteData;
+            var routeData = actionContext.RouteData;
             var year = int.Parse(routeData.Values["year"].ToString());
             var month = int.Parse(routeData.Values["month"].ToString());
             var day = int.Parse(routeData.Values["day"].ToString());
 
             if (DateBuilder.TryBuildFrom(year, month, day, out DateTime date) == false)
             {
-                actionContext.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    "Invalid date");
+                actionContext.Result = new ObjectResult(new ProblemDetails()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = "Invalid date"
+
+                })
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest
+                };
             }
         }
     }

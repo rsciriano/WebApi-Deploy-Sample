@@ -2,7 +2,6 @@
 using Api.Controllers.Administration;
 using Aplication;
 using Autofac;
-using Autofac.Integration.WebApi;
 using MediatR;
 
 namespace Api
@@ -13,7 +12,7 @@ namespace Api
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterApiControllers(typeof(FilmsController).Assembly);
+            //builder.RegisterApiControllers(typeof(FilmsController).Assembly);
 
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly)
                 .AsImplementedInterfaces();

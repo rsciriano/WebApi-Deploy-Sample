@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Api.IntegrationTests.Infrastructure;
 using Api.IntegrationTests.Infrastructure.CollectionFixtures;
-using Microsoft.Owin.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 namespace Api.IntegrationTests.Specs.Administration

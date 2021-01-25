@@ -1,20 +1,21 @@
-﻿using System.Web.Http;
-using Api.Infrastructure.Authorization;
+﻿using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
-using Microsoft.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
+    [ApiController]
     [Version1]
     [Version2]
-    [RoutePrefix("api/v{version:apiVersion}/version")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class VersionController : ApiController
+    [Route("api/v{version:apiVersion}/version")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class VersionController : Controller
     {
-        [Route]
+        [Route("")]
         public string Get() => "v1.0";
 
-        [Route, MapToApiVersion("2.0")]
+        [Route(""), MapToApiVersion("2.0")]
         public string GetV2() => "v2.0";
     }
 }

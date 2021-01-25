@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Api.Infrastructure;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Scheduling
 {
+    [ApiController]
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/cinemas/{cinemaId:int}/schedule")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class ScheduleController : ApiController
+    [Route("api/v{version:apiVersion}/cinemas/{cinemaId:int}/schedule")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class ScheduleController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -26,7 +28,7 @@ namespace Api.Controllers.Scheduling
         [HttpGet]
         [Route("{year:int}/{month:range(1,12)}/{day:range(1,31)}")]
         //[ValidateDate] // Date validation as filter
-        public async Task<IHttpActionResult> GetSchedule(
+        public async Task<IActionResult> GetSchedule(
             int cinemaId,
             int year,
             int month,

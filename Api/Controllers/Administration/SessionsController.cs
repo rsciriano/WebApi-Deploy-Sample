@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Api.BindingModels;
 using Api.Infrastructure;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
+    [ApiController]
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/cinemas/{cinemaId:int}/sessions")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class SessionsController : ApiController
+    [Route("api/v{version:apiVersion}/cinemas/{cinemaId:int}/sessions")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class SessionsController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -26,18 +27,18 @@ namespace Api.Controllers.Administration
         // GET: api/v1/cinemas/1/sessions
 
         [HttpGet]
-        [Route]
-        public IHttpActionResult GetSessions()
+        [Route("")]
+        public IActionResult GetSessions()
         {
             // TODO: Implement
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         // GET: api/v1/cinemas/1/sessions/1
 
         [HttpGet]
         [Route("{sessionId:int}", Name = "GetSession")]
-        public IHttpActionResult GetSession(int cinemaId, int sessionId)
+        public IActionResult GetSession(int cinemaId, int sessionId)
         {
             // TODO: Implement
             return Ok($"Session {sessionId}");
@@ -46,9 +47,9 @@ namespace Api.Controllers.Administration
         // POST: api/v1/cinemas/1/sessions
 
         [HttpPost]
-        [Route]
+        [Route("")]
         [ValidateModel]
-        public async Task<IHttpActionResult> CreateSession(
+        public async Task<IActionResult> CreateSession(
             int cinemaId,
             CreateSessionBindingModel model)
         {
@@ -58,14 +59,14 @@ namespace Api.Controllers.Administration
                 filmId: model.FilmId,
                 start: model.Start));
 
-            var url = Url.Route("GetSession", new { CinemaId = cinemaId, SessionId = response.Session.SessionId });
+            var url = Url.RouteUrl("GetSession", new { CinemaId = cinemaId, SessionId = response.Session.SessionId });
             return Created(url, response.Session);
         }
 
         // DELETE: cinemas/1/sessions/1
         [HttpDelete]
         [Route("{sessionId:int}")]
-        public Task<IHttpActionResult> DeleteSession(
+        public Task<IActionResult> DeleteSession(
             int cinemaId,
             int sessionId)
         {
@@ -78,14 +79,14 @@ namespace Api.Controllers.Administration
         [HttpPut]
         [Route("{sessionId:int}/publish")]
         [ValidateModel]
-        public async Task<IHttpActionResult> PublishSession(int cinemaId, int sessionId)
+        public async Task<IActionResult> PublishSession(int cinemaId, int sessionId)
         {
             await _mediator.Send(new PublishSessionCommand(
                 cinemaId: cinemaId,
                 sessionId: sessionId,
                 action: PublishSessionCommand.ActionType.Publish));
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         // DELETE: cinemas/1/sessions/1/publish
@@ -93,14 +94,14 @@ namespace Api.Controllers.Administration
         [HttpDelete]
         [Route("{sessionId:int}/publish")]
         [ValidateModel]
-        public async Task<IHttpActionResult> UnpublishSession(int cinemaId, int sessionId)
+        public async Task<IActionResult> UnpublishSession(int cinemaId, int sessionId)
         {
             await _mediator.Send(new PublishSessionCommand(
                 cinemaId: cinemaId,
                 sessionId: sessionId,
                 action: PublishSessionCommand.ActionType.Publish));
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         // List sessions (Pubished and unpublished)

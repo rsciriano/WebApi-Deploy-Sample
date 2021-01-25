@@ -28,6 +28,7 @@
     <PackageReference Include="Serilog.Sinks.ColoredConsole" />
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Serilog.Sinks.Literate" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>

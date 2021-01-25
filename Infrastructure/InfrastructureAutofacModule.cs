@@ -12,7 +12,7 @@ namespace Infrastructure
             builder.Register(c => new DatabaseContext())
                 .AsSelf()
                 .As<IUnitOfWork>()
-                .InstancePerRequest();
+                .InstancePerLifetimeScope();
 
             // Scan assembly for other registrations
             var assembly = GetType().Assembly;

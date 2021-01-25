@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.configuration" />
     <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +20,7 @@
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="Serilog" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>

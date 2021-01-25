@@ -2,12 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Infrastructure;
-using Microsoft.Owin.Testing;
 using Infrastructure.Initializers;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.AspNetCore.Hosting;
+using Xunit;
+using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 {
-    public class DatabaseFixture : IDisposable
+    public class DatabaseFixture : IDisposable, IAsyncLifetime
     {
         public DatabaseFixture()
         {         
@@ -45,12 +49,11 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
                     Sessions = sessions
                 };
             }
-
-            // Build the test server
-            Server = TestServer.Create<Startup>();
         }
+        
+        private IWebHost _host;
 
-        public TestServer Server { get; }
+        public TestServer Server => _host.GetTestServer();
 
         public SeedData SeedData { get; }
 
@@ -63,6 +66,23 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
             }
 
             Server.Dispose();
+            _host.Dispose();
+        }
+
+        public async Task InitializeAsync()
+        {
+            _host = new WebHostBuilder()
+                   .UseTestServer()
+                   .UseStartup<TestStartup>()
+                   .Build();
+
+            await _host.StartAsync();
+        }
+
+        public Task DisposeAsync()
+        {
+            // Nothing here
+            return Task.CompletedTask;
         }
     }
 }

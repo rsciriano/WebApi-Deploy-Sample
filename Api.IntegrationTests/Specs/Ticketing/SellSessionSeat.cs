@@ -5,7 +5,7 @@ using Api.IntegrationTests.Infrastructure;
 using Api.IntegrationTests.Infrastructure.CollectionFixtures;
 using Aplication.Commands;
 using FluentAssertions;
-using Microsoft.Owin.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 namespace Api.IntegrationTests.Specs.Ticketing

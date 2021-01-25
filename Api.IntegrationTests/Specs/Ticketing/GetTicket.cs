@@ -3,7 +3,7 @@ using Api.IntegrationTests.Infrastructure.CollectionFixtures;
 using Aplication.Queries;
 using Aplication.Queries.ViewModels;
 using FluentAssertions;
-using Microsoft.Owin.Testing;
+using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
 using System.Linq;

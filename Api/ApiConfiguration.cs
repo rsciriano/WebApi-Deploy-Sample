@@ -1,17 +1,23 @@
-﻿using System.Web.Http;
-using Api.Infrastructure;
+﻿using Api.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.Web.Http.ExceptionHandling;
-using System.Web.Http.Routing;
 using Api.Infrastructure.Authorization;
-using Api.Infrastructure.Services;
-using Microsoft.Web.Http.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
 
 namespace Api
 {
     public static class ApiConfiguration
     {
+        public static void Configure(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                Policies.Configure(options);
+            });
+        }
+
+        /*
         public static void Configure(HttpConfiguration config)
         {
             // Map attribute routes
@@ -55,5 +61,6 @@ namespace Api
             serializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
             serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
+        */
     }
 }

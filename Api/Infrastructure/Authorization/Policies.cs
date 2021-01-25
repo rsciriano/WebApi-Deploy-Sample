@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Security.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Infrastructure.Authorization
 {

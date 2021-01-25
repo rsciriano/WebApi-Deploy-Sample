@@ -1,18 +1,19 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Queries;
 using Aplication.Queries.ViewModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/cinemas")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class CinemasController : ApiController
+    [Route("api/v{version:apiVersion}/cinemas")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class CinemasController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -24,9 +25,8 @@ namespace Api.Controllers.Administration
         // GET: api/v1/cinemas
 
         [HttpGet]
-        [Route]
-        [ResponseType(typeof(CinemaViewModel[]))]
-        public async Task<IHttpActionResult> GetCinemas()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CinemaViewModel[]))]
+        public async Task<IActionResult> GetCinemas()
         {
             var response = await _mediator.Send(new GetCinemasQuery());
 
@@ -36,8 +36,8 @@ namespace Api.Controllers.Administration
         // GET: api/v1/cinemas/1
         [HttpGet]
         [Route("{cinemaId:int}")]
-        [ResponseType(typeof(CinemaViewModel))]
-        public async Task<IHttpActionResult> GetCinema(int cinemaId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CinemaViewModel))]
+        public async Task<IActionResult> GetCinema(int cinemaId)
         {
             var response = await _mediator.Send(new GetCinemaQuery
             {

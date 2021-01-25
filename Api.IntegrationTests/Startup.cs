@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿#if NET48
+
+using System.Web.Http;
 using Acheve.Owin.Testing.Security;
 using Api.Infrastructure.Authorization;
 using Autofac;
@@ -57,3 +59,4 @@ namespace Api.IntegrationTests
         }
     }
 }
+#endif

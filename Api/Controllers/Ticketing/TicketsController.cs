@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Commands;
 using Aplication.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Ticketing
 {
+    [ApiController]
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/cinemas/{cinemaId:int}/ticketing")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Vendor)]
-    public class TicketsController : ApiController
+    [Route("api/v{version:apiVersion}/cinemas/{cinemaId:int}/ticketing")]
+    [AuthorizeAttribute(Policy = Policies.Vendor)]
+    public class TicketsController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -25,7 +27,7 @@ namespace Api.Controllers.Ticketing
 
         [HttpPost]
         [Route("sessions/{sessionId:int}/seat/{row:int}/{number:int}")]
-        public async Task<IHttpActionResult> SellSessionSeat(
+        public async Task<IActionResult> SellSessionSeat(
             int cinemaId,
             int sessionId,
             int row,
@@ -46,7 +48,7 @@ namespace Api.Controllers.Ticketing
 
         [HttpGet]
         [Route("{ticketId:guid}")]
-        public async Task<IHttpActionResult> SellSessionSeat(
+        public async Task<IActionResult> SellSessionSeat(
             int cinemaId,
             Guid ticketId)
         {

@@ -1,16 +1,17 @@
-﻿using System.Net;
-using System.Web.Http;
-using Api.Infrastructure;
+﻿using Api.Infrastructure;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
+    [ApiController]
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/films")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class FilmsController : ApiController
+    [Route("api/v{version:apiVersion}/films")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class FilmsController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -22,30 +23,30 @@ namespace Api.Controllers.Administration
         // GET: api/v1/films
 
         [HttpGet]
-        [Route]
-        public IHttpActionResult GetFilms()
+        [Route("")]
+        public IActionResult GetFilms()
         {
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent(); 
         }
 
         // GET: api/v1/films/1
 
         [HttpGet]
         [Route("{filmId:int}")]
-        public IHttpActionResult GetFilm(int filmId)
+        public IActionResult GetFilm(int filmId)
         {
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         // POST: api/v1/films
 
         [HttpPost]
-        [Route]
+        [Route("")]
         [ValidateModel]
-        public IHttpActionResult CreateFilm(
+        public IActionResult CreateFilm(
             string model)
         {
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
     }
 }

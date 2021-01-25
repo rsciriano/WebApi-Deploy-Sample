@@ -1,19 +1,20 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Threading.Tasks;
 using Api.BindingModels;
 using Api.Infrastructure;
 using Api.Infrastructure.Authorization;
 using Api.Infrastructure.Versioning;
 using Aplication.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Administration
 {
+    [ApiController]
     [Version1]
-    [RoutePrefix("api/v{version:apiVersion}/cinemas/{cinemaId:int}/screens")]
-    [CustomResourceAuthorizeAttribute(Policy = Policies.Administrator)]
-    public class ScreensController : ApiController
+    [Route("api/v{version:apiVersion}/cinemas/{cinemaId:int}/screens")]
+    [AuthorizeAttribute(Policy = Policies.Administrator)]
+    public class ScreensController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -25,18 +26,18 @@ namespace Api.Controllers.Administration
         // GET: api/v1/cinemas/1/screens
 
         [HttpGet]
-        [Route]
-        public IHttpActionResult GetScreens()
+        [Route("")]
+        public IActionResult GetScreens()
         {
             // TODO: Impement
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         // GET: api/v1/cinemas/1/screens/1
 
         [HttpGet]
         [Route("{screenId:int}", Name = "GetScreen")]
-        public IHttpActionResult GetScreen(int cinemaId, int screenId)
+        public IActionResult GetScreen(int cinemaId, int screenId)
         {
             // TODO: Implement
             return Ok($"Screen {screenId}");
@@ -45,9 +46,9 @@ namespace Api.Controllers.Administration
         // POST: api/v1/cinemas/1/screens
 
         [HttpPost]
-        [Route]
+        [Route("")]
         [ValidateModel]
-        public async Task<IHttpActionResult> CreateScreen(
+        public async Task<IActionResult> CreateScreen(
             int cinemaId,
             CreateScreenBindingModel model)
         {
@@ -57,7 +58,7 @@ namespace Api.Controllers.Administration
                 screenRows: model.Rows,
                 screenSeatsPerRow: model.SeatsPerRow));
 
-            var url = Url.Route("GetScreen", new
+            var url = Url.RouteUrl("GetScreen", new
             {
                 CinemaId = cinemaId,
                 ScreenId = response.Screen.Id
