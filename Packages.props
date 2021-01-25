@@ -7,7 +7,6 @@
     <PackageReference Update="Dapper.Contrib" Version="[1.50.0]" />
     <PackageReference Update="FluentAssertions" Version="[4.19.4]" />
     <PackageReference Update="FluentValidation" Version="[7.1.1]" />
-    <PackageReference Update="IsExternalInit" Version="1.0.0" />
     <PackageReference Update="MediatR" Version="[3.0.1]" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.JwtBearer" Version="[5.0.2]" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Versioning" Version="[4.2.0]" />
@@ -16,7 +15,6 @@
     <PackageReference Update="Microsoft.AspNet.WebApi.Owin" Version="[5.2.3]" />
     <PackageReference Update="Microsoft.AspNet.WebApi.OwinSelfHost" Version="[5.2.3]" />
     <PackageReference Update="Microsoft.AspNet.WebApi.Versioning" Version="[2.1.0]" />
-    <PackageReference Update="Microsoft.CSharp" Version="[4.7.0]" />
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="[5.0.2]" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="[5.0.2]" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="[16.8.3]" />
@@ -37,7 +35,6 @@
     <PackageReference Update="System.Configuration.ConfigurationManager" Version="[5.0.0]" />
     <PackageReference Update="System.ComponentModel.Annotations" Version="[5.0.0]" />
     <PackageReference Update="System.Data.DataSetExtensions" Version="[4.5.0]" />
-    <PackageReference Update="System.ValueTuple" Version="[4.5.0]" />    
     <PackageReference Update="xunit" Version="[2.2.0]" />
     <PackageReference Update="xunit.abstractions" Version="[2.0.1]" />
     <PackageReference Update="xunit.assert" Version="[2.2.0]" />
