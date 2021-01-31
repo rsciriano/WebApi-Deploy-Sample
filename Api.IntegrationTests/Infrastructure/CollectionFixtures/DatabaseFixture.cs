@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Xunit;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 {
@@ -15,12 +18,62 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
     {
         public DatabaseFixture()
         {         
-            //Database.SetInitializer(new DropCreateDatabaseAlways());
-            
+         
+        }
+        
+        private IWebHost _host;
 
-            using (var context = new DatabaseContext())
+        public TestServer Server => _host.GetTestServer();
+
+        public SeedData SeedData { get; private set; }
+
+        public void Dispose()
+        {
+            using (var scope = _host.Services.CreateScope())
             {
-                context.Database.EnsureDeleted();
+                //Database.Delete("cinematic");
+                using (var context = _host.Services.GetRequiredService<DatabaseContext>())
+                {
+                    //context.Database.EnsureDeleted();
+                }
+            }
+
+            Server.Dispose();
+            _host.Dispose();
+        }
+
+        public async Task InitializeAsync()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+
+
+            _host = new WebHostBuilder()
+                .UseTestServer()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
+                .UseConfiguration(configuration)
+                .UseStartup<TestStartup>()
+                .Build();
+
+            var log = _host.Services.GetRequiredService<ILogger<DatabaseFixture>>();
+
+            using (var context = _host.Services.GetRequiredService<DatabaseContext>())
+            {
+
+                try
+                {
+                    context.Database.EnsureDeleted();
+                }
+                catch(Exception ex)
+                {
+                    log.LogWarning(ex, "Se ha producido un error al intentar eliminar la base de datos de pruebas");
+                }
                 context.Database.EnsureCreated();
 
                 Initiaizer.Seed(context);
@@ -49,32 +102,7 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
                     Sessions = sessions
                 };
             }
-        }
-        
-        private IWebHost _host;
 
-        public TestServer Server => _host.GetTestServer();
-
-        public SeedData SeedData { get; }
-
-        public void Dispose()
-        {
-            //Database.Delete("cinematic");
-            using (var context = new DatabaseContext())
-            {
-                //context.Database.EnsureDeleted();
-            }
-
-            Server.Dispose();
-            _host.Dispose();
-        }
-
-        public async Task InitializeAsync()
-        {
-            _host = new WebHostBuilder()
-                   .UseTestServer()
-                   .UseStartup<TestStartup>()
-                   .Build();
 
             await _host.StartAsync();
         }

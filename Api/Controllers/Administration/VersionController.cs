@@ -2,6 +2,7 @@
 using Api.Infrastructure.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Api.Controllers.Administration
 {
@@ -14,10 +15,10 @@ namespace Api.Controllers.Administration
     {
         [Route("")]
         [HttpGet]
-        public string Get() => "v1.0";
+        public string Get() => $"v1.0 on {Environment.OSVersion.ToString()}";
 
         [Route(""), MapToApiVersion("2.0")]
         [HttpGet]
-        public string GetV2() => "v2.0";
+        public string GetV2() => $"v2.0 on {Environment.OSVersion.ToString()}";
     }
 }

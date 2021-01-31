@@ -2,6 +2,7 @@ using Api;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Infrastructure;
+using Infrastructure.Initializers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -118,9 +119,21 @@ namespace CoreHost
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiSample v1.0");
                     c.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApiSample v2.0");
                 });
+
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    using (var context = app.ApplicationServices.GetRequiredService<DatabaseContext>())
+                    {
+                        //context.Database.EnsureDeleted();
+                        context.Database.EnsureCreated();
+
+                        Initiaizer.Seed(context);
+                        context.SaveChanges();
+                    }
+                }
             }
 
-            app.UseRouting();
+                app.UseRouting();
 
             // ### Temporal authentication middleware
             if (env.IsDevelopment())

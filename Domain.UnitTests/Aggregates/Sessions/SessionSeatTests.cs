@@ -47,7 +47,7 @@ namespace Domain.UnitTests.Aggregates.Sessions
             var action = new Action(() => _sut.Sell(3));
 
             // Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Domain.UnitTests.Aggregates.Sessions
             _sut.Ticket.Should().NotBeNull();
             _sut.Ticket.Id.Should().Be(_sut.TicketId.Value);
             _sut.Ticket.Price.Should().Be(5.12m);
-            _sut.Ticket.SessionSeat.ShouldBeEquivalentTo(_sut);
+            _sut.Ticket.SessionSeat.Should().BeEquivalentTo(_sut);
         }
 
 

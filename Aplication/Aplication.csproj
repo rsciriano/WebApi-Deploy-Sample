@@ -19,7 +19,6 @@
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Serilog" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" />
     <PackageReference Include="System.ComponentModel.Annotations" />
     <PackageReference Include="System.Data.DataSetExtensions" />
   </ItemGroup>

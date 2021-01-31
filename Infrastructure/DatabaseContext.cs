@@ -12,6 +12,11 @@ namespace Infrastructure
 {
     public class DatabaseContext : DbContext, IUnitOfWork
     {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<Cinema> Cinemas { get; set; }
 
         public DbSet<Film> Films { get; set; }
@@ -19,12 +24,6 @@ namespace Infrastructure
         public DbSet<Session> Sessions { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["Cinematic"].ConnectionString);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,7 +34,6 @@ namespace Infrastructure
             modelBuilder.ApplyConfiguration(new SessionEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SessionSeatEntityConfiguration());
             modelBuilder.ApplyConfiguration(new TicketEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new FilmCinemaEntityConfiguration());
         }
 
         async Task IUnitOfWork.CommitAsync()

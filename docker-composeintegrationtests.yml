@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Your_password123"
+            ACCEPT_EULA: "Y"  
+    integration-tests:
+        image: ${DOCKER_REGISTRY-}webapisample-integrationtests
+        build:
+          context: .
+          target: integrationtestrunner
+          dockerfile: CoreHost/Dockerfile
+        environment:
+            - "ConnectionStrings__Cinematic=Server=db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
+            
+        depends_on:
+            - db

@@ -18,6 +18,7 @@ namespace Infrastructure.Configuration
 
             builder.HasMany(x => x.Screens)
                 .WithOne(x => x.Cinema)
+                .IsRequired()
                 .HasForeignKey(x => x.CinemaId);
         }
     }

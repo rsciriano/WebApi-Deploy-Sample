@@ -1,6 +1,7 @@
 ﻿
 using Autofac;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
@@ -9,7 +10,7 @@ namespace Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             // Manually register DbContext
-            builder.Register(c => new DatabaseContext())
+            builder.Register(c => new DatabaseContext(c.Resolve<DbContextOptions<DatabaseContext>>()))
                 .AsSelf()
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();

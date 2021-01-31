@@ -8,6 +8,7 @@ using Autofac.Extensions.DependencyInjection;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.IntegrationTests
@@ -48,8 +49,17 @@ namespace Api.IntegrationTests
 
             services.AddApiVersioning();
 
+            services.AddDbContext<DatabaseContext>(
+                options =>
+                {
+                    options.UseSqlServer("name=ConnectionStrings:Cinematic");
+                }
+            );
+
             ApiConfiguration.Configure(services);
 
+
+            services.AddLogging();
 
             // Create a container-builder and register dependencies
             var builder = new ContainerBuilder();
@@ -71,6 +81,7 @@ namespace Api.IntegrationTests
 
             // this will be used as the service-provider for the application!
             return new AutofacServiceProvider(AutofacContainer);
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -84,6 +95,7 @@ namespace Api.IntegrationTests
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

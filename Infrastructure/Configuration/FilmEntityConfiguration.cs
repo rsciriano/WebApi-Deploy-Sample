@@ -1,6 +1,8 @@
-﻿using Domain.Aggregates.Films;
+﻿using Domain.Aggregates.Cinemas;
+using Domain.Aggregates.Films;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 
 namespace Infrastructure.Configuration
 {
@@ -19,14 +21,12 @@ namespace Infrastructure.Configuration
             builder.Property(x => x.DurationInMinutes)
                 .IsRequired();
 
-            /*
             builder.HasMany(x => x.Cinemas)
-                .WithMany()
-                .Map(config =>
-                {
-                    config.ToTable("FilmCinemas", "cine");
-                });
-            */
+                .WithMany(x => x.Films)
+                .UsingEntity<Dictionary<string, object>>(
+                        "FilmCinemas",
+                        x => x.HasOne<Cinema>().WithMany(),
+                        x => x.HasOne<Film>().WithMany());                                
         }
     }
 }

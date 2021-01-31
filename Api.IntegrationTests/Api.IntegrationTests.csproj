@@ -8,6 +8,16 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Api\Api.csproj" />
     <ProjectReference Include="..\Aplication\Aplication.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
@@ -24,7 +34,7 @@
     <PackageReference Include="Acheve.TestHost" />
     <PackageReference Include="Autofac" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
-    <PackageReference Include="Dapper"  />
+    <PackageReference Include="Dapper" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" />
@@ -42,4 +52,8 @@
     <PackageReference Include="xunit.extensibility.execution" />
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
+
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="app.config" DestinationFiles="$(OutDir)\testhost.dll.config" />
+  </Target>
 </Project>
