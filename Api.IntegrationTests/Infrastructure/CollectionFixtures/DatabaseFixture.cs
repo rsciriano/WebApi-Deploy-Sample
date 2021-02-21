@@ -17,10 +17,10 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
     public class DatabaseFixture : IDisposable, IAsyncLifetime
     {
         public DatabaseFixture()
-        {         
-         
+        {
+
         }
-        
+
         private IWebHost _host;
 
         public TestServer Server => _host.GetTestServer();

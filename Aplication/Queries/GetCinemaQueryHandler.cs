@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Aplication.Queries.Infrastructure;
 using Aplication.Queries.ViewModels;
 using MediatR;
 using Dapper;
+using Infrastructure;
 
 namespace Aplication.Queries
 {

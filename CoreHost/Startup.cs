@@ -7,18 +7,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace CoreHost
 {
@@ -120,11 +117,19 @@ namespace CoreHost
                     c.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApiSample v2.0");
                 });
 
+                var log = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     using (var context = app.ApplicationServices.GetRequiredService<DatabaseContext>())
                     {
-                        //context.Database.EnsureDeleted();
+                        try
+                        {
+                            context.Database.EnsureDeleted();
+                        }
+                        catch (Exception ex)
+                        {
+                            log.LogWarning(ex, "Se ha producido un error al intentar eliminar la base de datos de pruebas");
+                        }
                         context.Database.EnsureCreated();
 
                         Initiaizer.Seed(context);

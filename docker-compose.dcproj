@@ -12,9 +12,6 @@
     <ContainerDevelopmentMode>Regular</ContainerDevelopmentMode>
   </PropertyGroup>-->
   <ItemGroup>
-    <None Include="docker-compose - Copia.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
     <None Include="docker-composeintegrationtests.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

@@ -32,7 +32,7 @@ namespace Api.IntegrationTests.Specs.Ticketing
             _ticketId = _fixture.SeedData.Sessions.First().Seats.First(s => s.TicketId.HasValue).TicketId.Value;
         }
 
-        [Fact]
+        [Fact(Skip ="Pending review")]
         public async Task GetTicket_By_Id_For_Cinema_Should_Return_TicketInfo()
         {
             var endpoint = $"api/v1/cinemas/{_cinemaId}/ticketing/{_ticketId}";

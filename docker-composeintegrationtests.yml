@@ -1,11 +1,16 @@
 version: '3.4'
 
 services:
-    db:
+    mssql-db:
         image: "mcr.microsoft.com/mssql/server"
         environment:
             SA_PASSWORD: "Your_password123"
             ACCEPT_EULA: "Y"  
+    postgres-db:
+        image: "postgres"
+        environment:
+            POSTGRES_USER: "my_user"
+            POSTGRES_PASSWORD: "my_pw"  
     integration-tests:
         image: ${DOCKER_REGISTRY-}webapisample-integrationtests
         build:
@@ -13,7 +18,12 @@ services:
           target: integrationtestrunner
           dockerfile: CoreHost/Dockerfile
         environment:
-            - "ConnectionStrings__Cinematic=Server=db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
+          - "DatabaseType=postgres"
+          - "ConnectionStrings__Cinematic_mssql=Server=mssql-db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
+          - "ConnectionStrings__Cinematic_postgres=Host=postgres-db;Database=Cinematic_Tests;Username=my_user;Password=my_pw;"
+        volumes:
+        - "./docker-test-results:/src/Api.IntegrationTests/TestResults"
             
         depends_on:
-            - db
+            - mssql-db
+            - postgres-db

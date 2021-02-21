@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Aplication.Queries.Infrastructure;
+using Infrastructure;
 using Aplication.Queries.ViewModels;
 using MediatR;
 using Dapper;
@@ -22,8 +22,8 @@ namespace Aplication.Queries
             {
                 // TODO: Add paging, sorting and filtering
                 const string sql = @"
-SELECT TOP 10 C.Id, C.Name 
-FROM cine.Cinemas C
+SELECT C.""Id"", C.""Name"" 
+FROM cine.""Cinemas"" C
 ";
                 var cinemas = await conn.QueryAsync<CinemaViewModel>(sql);
 

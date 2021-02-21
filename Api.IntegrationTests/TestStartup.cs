@@ -9,6 +9,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.IntegrationTests
@@ -16,6 +17,8 @@ namespace Api.IntegrationTests
     public class TestStartup
     {
         public ILifetimeScope AutofacContainer { get; private set; }
+
+        public IConfiguration Configuration { get; }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -48,13 +51,6 @@ namespace Api.IntegrationTests
                 .AddApplicationPart(Assembly.Load(new AssemblyName("Api")));
 
             services.AddApiVersioning();
-
-            services.AddDbContext<DatabaseContext>(
-                options =>
-                {
-                    options.UseSqlServer("name=ConnectionStrings:Cinematic");
-                }
-            );
 
             ApiConfiguration.Configure(services);
 

@@ -7,9 +7,24 @@ services:
           context: .
           dockerfile: CoreHost/Dockerfile
         depends_on:
-            - db
-    db:
+            - mssql-db
+            - postgres-db
+    mssql-db:
         image: "mcr.microsoft.com/mssql/server"
         environment:
             SA_PASSWORD: "Your_password123"
             ACCEPT_EULA: "Y"  
+    postgres-db:
+        image: "postgres"
+        environment:
+            POSTGRES_USER: "my_user"
+            POSTGRES_PASSWORD: "my_pw"  
+        ports:
+            - 5432:5432
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+        depends_on:
+            - postgres-db

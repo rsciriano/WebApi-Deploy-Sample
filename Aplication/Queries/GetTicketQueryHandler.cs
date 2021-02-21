@@ -1,4 +1,4 @@
-﻿using Aplication.Queries.Infrastructure;
+﻿using Infrastructure;
 using Aplication.Queries.ViewModels;
 using Dapper;
 using MediatR;
