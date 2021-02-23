@@ -22,7 +22,16 @@ namespace CoreHost
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {                    
+                    // Load secrets general appsettings mapped as Docker secrets file
+                    config.AddJsonFile("/run/secrets/appsettings.secrets.json", true, true);
+
+                    // Load secrets specific enviroiment appsettings mapped as Docker secrets file
+                    config.AddJsonFile($"/run/secrets/appsettings.{builderContext.HostingEnvironment.EnvironmentName}.secrets.json", true, true);
                 });
     }
 }

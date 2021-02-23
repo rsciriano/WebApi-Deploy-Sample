@@ -11,7 +11,21 @@ services:
         environment:
             POSTGRES_USER: "my_user"
             POSTGRES_PASSWORD: "my_pw"  
-    integration-tests:
+    integration-tests-mssql:
+        image: ${DOCKER_REGISTRY-}webapisample-integrationtests
+        build:
+          context: .
+          target: integrationtestrunner
+          dockerfile: CoreHost/Dockerfile
+        environment:
+          - "DatabaseType=mssql"
+          - "ConnectionStrings__Cinematic_mssql=Server=mssql-db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
+        volumes:
+        - "./docker-test-results:/src/Api.IntegrationTests/TestResults"
+            
+        depends_on:
+            - mssql-db
+    integration-tests-postgres:
         image: ${DOCKER_REGISTRY-}webapisample-integrationtests
         build:
           context: .
@@ -19,11 +33,9 @@ services:
           dockerfile: CoreHost/Dockerfile
         environment:
           - "DatabaseType=postgres"
-          - "ConnectionStrings__Cinematic_mssql=Server=mssql-db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
           - "ConnectionStrings__Cinematic_postgres=Host=postgres-db;Database=Cinematic_Tests;Username=my_user;Password=my_pw;"
         volumes:
         - "./docker-test-results:/src/Api.IntegrationTests/TestResults"
             
         depends_on:
-            - mssql-db
             - postgres-db

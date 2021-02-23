@@ -2,10 +2,15 @@ version: '3.4'
 
 services:
     webapisample:
-        image: ${DOCKER_REGISTRY-}webapisample
+        image: ${DOCKER_REGISTRY-}webapisample:${BUILDNUMBER-dev}
         build:
           context: .
+          args:
+            RUNTIME_VERSION: "${RUNTIME_VERSION-5.0-buster-slim}" #"5.0-buster-slim-arm32v7"
+            SDK_VERSION: "${SDK_VERSION-5.0-alpine}"
           dockerfile: CoreHost/Dockerfile
+        secrets:
+            - "appsettings.secrets.json"
         depends_on:
             - mssql-db
             - postgres-db
@@ -18,7 +23,9 @@ services:
         image: "postgres"
         environment:
             POSTGRES_USER: "my_user"
-            POSTGRES_PASSWORD: "my_pw"  
+            POSTGRES_PASSWORD_FILE: "/run/secrets/db_password"
+        secrets:
+            - "db_password"
         ports:
             - 5432:5432
     adminer:
@@ -28,3 +35,8 @@ services:
             - 8080:8080
         depends_on:
             - postgres-db
+secrets:
+   db_password:
+     file: ./docker-secrets/db_password
+   appsettings.secrets.json:
+     file: ./docker-secrets/appsettings.secrets.json

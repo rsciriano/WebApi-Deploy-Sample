@@ -4,8 +4,6 @@ services:
   webapisample:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseType=mssql" # mssql | postgres
-      - "ConnectionStrings__Cinematic_mssql=Server=mssql-db;Database=Cinematic_Tests;User=sa;Password=Your_password123;"
-      - "ConnectionStrings__Cinematic_postgres=Host=postgres-db;Database=Cinematic_Tests;Username=my_user;Password=my_pw;"
+      - "DatabaseType=postgres" # mssql | postgres
     ports:
-      - "80"
+      - "81:80"
