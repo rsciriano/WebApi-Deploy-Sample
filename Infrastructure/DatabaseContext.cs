@@ -7,14 +7,15 @@ using Domain.Aggregates.Sessions;
 using Domain.Aggregates.Tickets;
 using Infrastructure.Configuration;
 using System.Configuration;
+using Infrastructure.Initializers;
 
 namespace Infrastructure
 {
     public class DatabaseContext : DbContext, IUnitOfWork
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        public DatabaseContext(DatabaseConfiguration<DatabaseContext> configuration) : base(configuration?.GetDbContextOptions())
         {
-
+            Configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration));
         }
 
         public DbSet<Cinema> Cinemas { get; set; }
@@ -24,6 +25,7 @@ namespace Infrastructure
         public DbSet<Session> Sessions { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
+        public DatabaseConfiguration<DatabaseContext> Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

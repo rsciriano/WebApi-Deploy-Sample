@@ -110,35 +110,16 @@ namespace CoreHost
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => 
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiSample v1.0");
-                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApiSample v2.0");
-                });
-
-                var log = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
-                using (var scope = app.ApplicationServices.CreateScope())
-                {
-                    using (var context = app.ApplicationServices.GetRequiredService<DatabaseContext>())
-                    {
-                        try
-                        {
-                            context.Database.EnsureDeleted();
-                        }
-                        catch (Exception ex)
-                        {
-                            log.LogWarning(ex, "Se ha producido un error al intentar eliminar la base de datos de pruebas");
-                        }
-                        context.Database.EnsureCreated();
-
-                        Initiaizer.Seed(context);
-                        context.SaveChanges();
-                    }
-                }
             }
 
-                app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiSample v1.0");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApiSample v2.0");
+            });
+
+            app.UseRouting();
 
             // ### Temporal authentication middleware
             if (env.IsDevelopment())

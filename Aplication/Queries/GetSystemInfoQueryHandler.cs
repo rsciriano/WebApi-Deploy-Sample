@@ -38,7 +38,15 @@ namespace Aplication.Queries
 
                 if (sql != null)
                 {
-                    systemInfo.DatabaseVersionString = await conn.ExecuteScalarAsync<string>(sql);
+                    try
+                    {
+                        systemInfo.DatabaseVersionString = await conn.ExecuteScalarAsync<string>(sql);
+                    }
+                    catch(Exception ex)
+                    {
+                        // For demo purposes only ;-)
+                        systemInfo.DatabaseVersionString = ex.ToString();
+                    }
                 }
                 else
                 {

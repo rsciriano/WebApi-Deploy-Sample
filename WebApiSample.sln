@@ -33,6 +33,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreHost", "CoreHost\CoreHo
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D764213F-336C-4661-84E1-02D649594373}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-secrets", "docker-secrets", "{85D97D9E-F312-4E46-A338-6A9A2F587AA4}"
+	ProjectSection(SolutionItems) = preProject
+		docker-secrets\appsettings.secrets.json = docker-secrets\appsettings.secrets.json
+		docker-secrets\db_password = docker-secrets\db_password
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

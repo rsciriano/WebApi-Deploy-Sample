@@ -6,4 +6,4 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseType=postgres" # mssql | postgres
     ports:
-      - "81:80"
+      - "82:80"

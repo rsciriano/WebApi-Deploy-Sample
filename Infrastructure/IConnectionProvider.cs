@@ -9,6 +9,5 @@ namespace Infrastructure
 
         string GetDatabaseType();
 
-        DbContextOptions<T> GetDbContextOptions<T>() where T: DbContext;
     }
 }

@@ -65,20 +65,6 @@ namespace Api.IntegrationTests.Infrastructure.CollectionFixtures
 
             using (var context = _host.Services.GetRequiredService<DatabaseContext>())
             {
-
-                try
-                {
-                    context.Database.EnsureDeleted();
-                }
-                catch(Exception ex)
-                {
-                    log.LogWarning(ex, "Se ha producido un error al intentar eliminar la base de datos de pruebas");
-                }
-                context.Database.EnsureCreated();
-
-                Initiaizer.Seed(context);
-                context.SaveChanges();
-
                 var firstCinema = context.Cinemas
                     .AsNoTracking()
                     .Include(c => c.Screens)

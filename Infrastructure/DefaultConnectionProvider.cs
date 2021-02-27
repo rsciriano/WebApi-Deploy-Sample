@@ -10,35 +10,24 @@ namespace Infrastructure
 {
     public class DefaultConnectionProvider : IConnectionProvider
     {
-        public DefaultConnectionProvider(IConfiguration configuration)
+        private readonly DatabaseContext databaseContext;
+        private readonly IDatabaseInitializer<DatabaseContext> databaseInitializer;
+
+        public DefaultConnectionProvider(DatabaseConfiguration<DatabaseContext> configuration, DatabaseContext databaseContext, IDatabaseInitializer<DatabaseContext> databaseInitializer)
         {
-            Configuration = configuration;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.databaseContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+            this.databaseInitializer = databaseInitializer ?? throw new ArgumentNullException(nameof(databaseInitializer));
         }
 
-        public IConfiguration Configuration { get; }
-
-        public string GetDatabaseType()
-        {
-            return Configuration["DatabaseType"];
-        }
-
-        public string GetConnectionString()
-        {
-            string connectionStringName = $"Cinematic_{GetDatabaseType()}";
-            string connectionString = Configuration.GetConnectionString(connectionStringName);
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException($"Conection string '{connectionStringName}' not configured");
-            }
-
-            return connectionString;
-        }
+        public DatabaseConfiguration<DatabaseContext> Configuration { get; }
 
         public IDbConnection CreateConnection()
         {
-            string databaseType = GetDatabaseType();
-            string connectionString = GetConnectionString();
+            string databaseType = Configuration.GetDatabaseType();
+            string connectionString = Configuration.GetConnectionString();
+
+            databaseInitializer.EnsureDatabaseInitialization(databaseContext);
 
             if (databaseType == "mssql")
             {
@@ -54,28 +43,9 @@ namespace Infrastructure
             }
         }
 
-        public DbContextOptions<T> GetDbContextOptions<T>() where T : DbContext
+        public string GetDatabaseType()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<T>();
-
-            string databaseType = GetDatabaseType();
-            string connectionString = GetConnectionString();
-
-            if (databaseType == "mssql")
-            {
-                optionsBuilder.UseSqlServer(connectionString);
-
-            }
-            else if (databaseType == "postgres")
-            {
-                optionsBuilder.UseNpgsql(connectionString);
-            }
-            else
-            {
-                throw new InvalidOperationException($"'{databaseType}' is a invalid value for DatabaseType configuration. Valid values are 'mssql', 'postgres'");
-            }
-
-            return optionsBuilder.Options;
+            return Configuration.GetDatabaseType();
         }
     }
 }

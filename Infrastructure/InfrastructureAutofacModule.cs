@@ -11,11 +11,21 @@ namespace Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.Register(c =>  new DatabaseConfiguration<DatabaseContext>(c.Resolve<IConfiguration>()));
+
+
             // DbContext configuration
-            builder.Register(c => c.Resolve<IConnectionProvider>().GetDbContextOptions<DatabaseContext>());
+            builder.Register(c => c.Resolve<DatabaseConfiguration<DatabaseContext>>().GetDbContextOptions());
 
             // Manually register DbContext
-            builder.Register(c => new DatabaseContext(c.Resolve<DbContextOptions<DatabaseContext>>()))
+            builder.Register(c =>
+            {
+                var context = new DatabaseContext(c.Resolve<DatabaseConfiguration<DatabaseContext>>());
+                var initializer = c.Resolve<IDatabaseInitializer<DatabaseContext>>();
+                initializer.EnsureDatabaseInitialization(context);
+
+                return context;
+            })
                 .AsSelf()
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();
