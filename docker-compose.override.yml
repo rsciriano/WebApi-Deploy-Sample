@@ -4,6 +4,8 @@ services:
   corehost:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseType=postgres" # mssql | postgres
+      - "ConnectionStrings__Cinematic_postgres=Host=postgres-db;Database=Cinematic_Tests;Username=my_user;Password=my_pw;"      
     ports:
       - "80"
     volumes:

@@ -6,3 +6,11 @@ services:
     build:
       context: .
       dockerfile: CoreHost/Dockerfile
+    depends_on:
+    - postgres-db
+
+  postgres-db:
+    image: "postgres"
+    environment:
+        POSTGRES_USER: "my_user"
+        POSTGRES_PASSWORD: "my_pw"
