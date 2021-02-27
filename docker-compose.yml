@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  corehost:
+    image: ${DOCKER_REGISTRY-}corehost
+    build:
+      context: .
+      dockerfile: CoreHost/Dockerfile
