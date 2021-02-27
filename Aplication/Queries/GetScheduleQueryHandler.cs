@@ -21,16 +21,16 @@ namespace Aplication.Queries
             using (var conn = _connectionProvider.CreateConnection())
             {
                 const string sql = @"
-SELECT SE.""Id"" AS SessionId
-      ,SC.""Id"" AS ScreenId
-	  ,SC.""Name"" AS ScreenName
-	  ,F.""Id"" AS FilmId
-	  ,F.""Title"" AS FilmTitle
-	  ,F.""DurationInMinutes"" AS FilmDuration
-FROM session.""Sessions"" SE
-    INNER JOIN cine.""Screens"" SC ON SE.""ScreenId"" = SC.""Id""
-	INNER JOIN cine.""Films"" F ON SE.""FilmId"" = F.""Id""
-WHERE SC.""CinemaId"" = @cinemaId AND SE.""Start"" BETWEEN @start AND @end
+SELECT SE.Id AS SessionId
+      ,SC.Id AS ScreenId
+	  ,SC.Name AS ScreenName
+	  ,F.Id AS FilmId
+	  ,F.Title AS FilmTitle
+	  ,F.DurationInMinutes AS FilmDuration
+FROM [session].[Sessions] SE
+    INNER JOIN [cine].[Screens] SC ON SE.ScreenId = SC.Id
+	INNER JOIN [cine].[Films] F ON SE.FilmId = F.Id
+WHERE SC.CinemaId = @cinemaId AND SE.[Start] BETWEEN @start AND @end
 ";
                 var cinemas = await conn.QueryAsync<ScheduleViewModel>(sql, new
                 {
