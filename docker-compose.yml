@@ -14,3 +14,5 @@ services:
     environment:
         POSTGRES_USER: "my_user"
         POSTGRES_PASSWORD: "my_pw"
+    ports:
+    - 5432:5432
