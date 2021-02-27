@@ -1,9 +1,0 @@
-version: '3.4'
-
-services:
-  webapisample:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseType=postgres" # mssql | postgres
-    ports:
-      - "82:80"
