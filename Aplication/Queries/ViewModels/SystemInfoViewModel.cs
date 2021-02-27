@@ -14,5 +14,7 @@ namespace Aplication.Queries.ViewModels
 
         public string MachineName { get; internal set; }
         public string DatabaseType { get; internal set; }
+
+        public string BuildNumber { get; set; }
     }
 }

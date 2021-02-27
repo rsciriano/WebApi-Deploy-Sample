@@ -20,6 +20,7 @@ namespace Aplication.Queries
         {
             var systemInfo = new SystemInfoViewModel();
 
+            systemInfo.BuildNumber = "v1.0";
             systemInfo.MachineName = Environment.MachineName;
             systemInfo.OSVersion = Environment.OSVersion.ToString();
             systemInfo.DatabaseType = _connectionProvider.GetDatabaseType();
