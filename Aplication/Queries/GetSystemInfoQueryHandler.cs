@@ -24,35 +24,35 @@ namespace Aplication.Queries
             systemInfo.OSVersion = Environment.OSVersion.ToString();
             systemInfo.DatabaseType = _connectionProvider.GetDatabaseType();
 
-            using (var conn = _connectionProvider.CreateConnection())
+            try
             {
-                string sql = null;
-                if (systemInfo.DatabaseType == "mssql")
-                {
-                    sql = "select @@version";
-                }
-                else if (systemInfo.DatabaseType == "postgres")
-                {
-                    sql = "select version()";
-                }
 
-                if (sql != null)
+                using (var conn = _connectionProvider.CreateConnection())
                 {
-                    try
+                    string sql = null;
+                    if (systemInfo.DatabaseType == "mssql")
+                    {
+                        sql = "select @@version";
+                    }
+                    else if (systemInfo.DatabaseType == "postgres")
+                    {
+                        sql = "select version()";
+                    }
+
+                    if (sql != null)
                     {
                         systemInfo.DatabaseVersionString = await conn.ExecuteScalarAsync<string>(sql);
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        // For demo purposes only ;-)
-                        systemInfo.DatabaseVersionString = ex.ToString();
+                        systemInfo.DatabaseVersionString = "¿?";
                     }
                 }
-                else
-                {
-                    systemInfo.DatabaseVersionString = "¿?";
-                }
-
+            }
+            catch (Exception ex)
+            {
+                // For demo purposes only ;-)
+                systemInfo.DatabaseVersionString = ex.ToString();
             }
 
             return systemInfo;

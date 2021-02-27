@@ -10,13 +10,13 @@ namespace Infrastructure
 {
     public class DefaultConnectionProvider : IConnectionProvider
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly Lazy<DatabaseContext> lazyDatabaseContext;
         private readonly IDatabaseInitializer<DatabaseContext> databaseInitializer;
 
-        public DefaultConnectionProvider(DatabaseConfiguration<DatabaseContext> configuration, DatabaseContext databaseContext, IDatabaseInitializer<DatabaseContext> databaseInitializer)
+        public DefaultConnectionProvider(DatabaseConfiguration<DatabaseContext> configuration, Lazy<DatabaseContext> lazyDatabaseContext, IDatabaseInitializer<DatabaseContext> databaseInitializer)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            this.databaseContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+            this.lazyDatabaseContext = lazyDatabaseContext ?? throw new ArgumentNullException(nameof(lazyDatabaseContext));
             this.databaseInitializer = databaseInitializer ?? throw new ArgumentNullException(nameof(databaseInitializer));
         }
 
@@ -27,7 +27,7 @@ namespace Infrastructure
             string databaseType = Configuration.GetDatabaseType();
             string connectionString = Configuration.GetConnectionString();
 
-            databaseInitializer.EnsureDatabaseInitialization(databaseContext);
+            databaseInitializer.EnsureDatabaseInitialization(lazyDatabaseContext.Value);
 
             if (databaseType == "mssql")
             {

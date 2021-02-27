@@ -30,6 +30,9 @@ namespace Infrastructure
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();
 
+            // Lazy DbContext
+            builder.Register(c => new Lazy<DbContext>(() => c.Resolve<DatabaseContext>()));
+
             // Scan assembly for other registrations
             var assembly = GetType().Assembly;
 
